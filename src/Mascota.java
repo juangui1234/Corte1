@@ -54,6 +54,9 @@ public class Mascota {
         }
         this.nombre = nombre;
     }
+    public Historial getHistorial() {
+        return historial;
+    }
 
     public String getEspecie() {
         return especie;

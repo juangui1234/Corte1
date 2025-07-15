@@ -6,6 +6,7 @@ public class VentanaPrincipal extends JFrame {
     private JDesktopPane desktopPane;
     private CrudMascotas crudMascotas;
 
+
     public VentanaPrincipal() {
         setTitle("Sistema de Gestión Clínica Veterinaria");
         setSize(800, 600);
@@ -29,6 +30,15 @@ public class VentanaPrincipal extends JFrame {
         // Menú Vista
         JMenu menuVista = new JMenu("Vista");
 
+        // Registra la consulta
+        JMenuItem itemRegistrarConsulta = new JMenuItem("Registrar consulta");
+        itemRegistrarConsulta.addActionListener(_ -> {
+            PanelRegistrarConsulta panel = new PanelRegistrarConsulta(crudMascotas);
+            desktopPane.add(panel);
+            panel.setVisible(true);
+        });
+        menuVista.add(itemRegistrarConsulta);
+
         JMenuItem itemPacientes = new JMenuItem("Pacientes");
         itemPacientes.addActionListener(_ -> {
             ListaPacientes lista = new ListaPacientes(crudMascotas);
@@ -43,6 +53,14 @@ public class VentanaPrincipal extends JFrame {
             panel.setVisible(true);
         });
 
+        JMenuItem itemGestion = new JMenuItem("Gestión Mascotas");
+        itemGestion.addActionListener(_ -> {
+            PanelGestionMascotas panel = new PanelGestionMascotas(crudMascotas);
+            desktopPane.add(panel);
+            panel.setVisible(true);
+        });
+        menuVista.add(itemGestion);
+
         menuVista.add(itemPacientes);
         menuVista.add(itemConsulta);
 
@@ -51,6 +69,8 @@ public class VentanaPrincipal extends JFrame {
 
         setJMenuBar(menuBar);
     }
+
+
 
     private JMenu getJMenu() {
         JMenu menuArchivo = new JMenu("Archivo");
