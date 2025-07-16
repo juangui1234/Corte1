@@ -1,6 +1,7 @@
 public class Veterinario {
     private String nombre;
     private String especialidad;
+    private String nombreVeterinario;
 
     public Veterinario(String nombre, String especialidad) {
         /* Código original:

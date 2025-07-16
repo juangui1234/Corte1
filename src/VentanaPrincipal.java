@@ -23,7 +23,7 @@ public class VentanaPrincipal extends JFrame {
         crearMenu();
         JOptionPane.showMessageDialog(
                 this,
-                "👋 Bienvenido al Sistema de Gestión Clínica Veterinaria de Mascotas realizado por Juan Guillermo Salazar",
+                "👋 Bienvenido al Sistema de Gestión Clínica Veterinaria de Mascotas **LA MEJOR** realizado por Juan Guillermo Salazar",
                 "Bienvenido",
                 JOptionPane.INFORMATION_MESSAGE
         );
@@ -48,6 +48,8 @@ public class VentanaPrincipal extends JFrame {
         });
         menuVista.add(itemRegistrarConsulta);
 
+
+
         JMenuItem itemPacientes = new JMenuItem("Pacientes");
         itemPacientes.addActionListener(_ -> {
             ListaPacientes lista = new ListaPacientes(crudMascotas, crudPropietarios);
@@ -70,6 +72,14 @@ public class VentanaPrincipal extends JFrame {
             desktopPane.add(panel);
             panel.setVisible(true);
         });
+
+        JMenuItem itemVacunas = new JMenuItem("Vacunas");
+        itemVacunas.addActionListener(e -> {
+            PanelVacunas panelVacunas = new PanelVacunas(crudMascotas); // 👈 este debe existir
+            desktopPane.add(panelVacunas); // escritorio es tu JDesktopPane
+            panelVacunas.setVisible(true);
+        });
+        menuVista.add(itemVacunas);
 
         JMenuItem itemGestion = new JMenuItem("Gestión Mascotas");
         itemGestion.addActionListener(_ -> {
@@ -114,8 +124,8 @@ public class VentanaPrincipal extends JFrame {
         itemSalir.addActionListener(_ -> {
             int opcion = JOptionPane.showConfirmDialog(
                     this,
-                    "¿Está seguro que desea salir?",
-                    "Confirmar salida",
+                    "¿Estas seguro que deseas salir?",
+                    "Confirma tu salida",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE
             );

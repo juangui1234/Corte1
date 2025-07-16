@@ -3,12 +3,12 @@ import java.util.List;
 
 public class Mascota {
     private String nombre;
-     private String especie;
+    private String especie;
     private int edad;
     //private ArrayList<Consulta> consultas;
-    private List<Vacuna> vacunas;
+    private List<Vacuna> vacunas = new ArrayList<>();
+    private String nombreMascota;
     private Historial historial; //delegar manejo de consultas a historial
-
     public Mascota(String nombre, String especie, int edad) {
         /* Código original:
         this.nombre = nombre;
@@ -32,6 +32,7 @@ public class Mascota {
     public void agregarVacuna(Vacuna vacuna) {
         vacunas.add(vacuna);
     }
+
     public void mostrarVacunas() {
         if (vacunas.isEmpty()) {
             System.out.println("No hay vacunas registradas.");

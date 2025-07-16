@@ -1,0 +1,99 @@
+Identificación de entidades
+
+Requisito	Entidad         	Justificacion
+
+1	        Propietario	        Es quien tiene una o más mascotas
+2	        Mascota	            Es el sujeto del cuidado veterinario
+3	        Consulta	        Representa cada atención médica
+4	        Cita	            Permite organizar las consultas
+5	        Vacuna	            Se registra como parte del historial
+6	        Veterinario	        Es quien atiende a la mascota
+
+
+
+Relacionamiento entre entidades
+Puedes usar este texto como guía para un diagrama en Draw.io, Lucidchart, Canva, o incluso a mano:
+
+Relaciones:
+Un Propietario tiene muchas Mascotas. (1:N)
+
+Una Mascota puede tener muchas Consultas. (1:N)
+
+Una Mascota puede tener muchas Vacunas. (1:N)
+
+Una Mascota puede tener muchas Citas. (1:N)
+
+Una Cita tiene una Mascota, un Propietario y un Veterinario asignado. (N:1)
+
+Una Consulta está relacionada a una Mascota y realizada por un Veterinario. (N:1)
+
+
+Modelo visual simplificado:
+ruby
+Copiar
+Editar
+Propietario
+   └── 1:N ──> Mascota
+                  ├── 1:N ──> Consulta ──> 1 ── Veterinario
+                  ├── 1:N ──> Vacuna
+                  └── 1:N ──> Cita ──────> 1 ── Veterinario
+                                        └─────> 1 ── Propietario
+
+
+
+Clases Java (diferentes a las del ejemplo)
+Clase Cita.java
+java
+Copiar
+Editar
+import java.time.LocalDate;
+
+public class Cita {
+    private String idCita;
+    private LocalDate fecha;
+    private String hora;
+    private Mascota mascota;
+    private Propietario propietario;
+    private Veterinario veterinario;
+
+    public Cita(String idCita, LocalDate fecha, String hora, Mascota mascota, Propietario propietario, Veterinario veterinario) {
+        this.idCita = idCita;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.mascota = mascota;
+        this.propietario = propietario;
+        this.veterinario = veterinario;
+    }
+
+    // Getters y Setters
+
+    public void mostrarCita() {
+        System.out.println("ID Cita: " + idCita);
+        System.out.println("Fecha: " + fecha);
+        System.out.println("Hora: " + hora);
+        System.out.println("Mascota: " + mascota.getNombre());
+        System.out.println("Propietario: " + propietario.getNombre());
+        System.out.println("Veterinario asignado: " + veterinario.getNombre());
+    }
+}
+
+Lista de Roles y Tareas
+Rol	Tareas principales
+Administrador	Gestiona propietarios, veterinarios, mascotas y vacunas.
+Veterinario	Atiende consultas, receta tratamiento, aplica vacunas.
+Recepcionista	Registra nuevos propietarios/mascotas y agenda citas con veterinarios.
+
+
+
+Historias de Usuario
+Como recepcionista,
+quiero agendar una cita médica con fecha, hora, mascota y veterinario,
+para que el cliente pueda traer a su mascota en el horario establecido.
+
+Como veterinario,
+quiero registrar los detalles de una consulta (diagnóstico y tratamiento),
+para que el historial médico de la mascota esté completo.
+
+Como administrador,
+quiero registrar vacunas aplicadas a una mascota,
+para que se mantenga un control sanitario actualizado.
