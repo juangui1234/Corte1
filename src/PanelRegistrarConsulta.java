@@ -46,19 +46,28 @@ public class PanelRegistrarConsulta extends JInternalFrame {
             }
 
             try {
+                // ✅ Conversión segura de fecha
+                LocalDate fecha = LocalDate.parse(fechaTexto);
+
+                // ✅ Crear nueva consulta
                 String codigo = IDGenerator.generarCodigoConsulta();
-                Consulta consulta = new Consulta(codigo, fechaTexto, new Veterinario(nombreVet, especialidad));
+                Veterinario veterinario = new Veterinario(nombreVet, especialidad);
+                Consulta consulta = new Consulta(codigo, fecha, veterinario);
+
+                // ✅ Agregar consulta al historial de la mascota
                 mascota.agregarConsulta(consulta);
 
                 JOptionPane.showMessageDialog(this, "✅ Consulta registrada con éxito.");
                 dispose(); // cerrar la ventana
+
             } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Usa YYYY-MM-DD");
+                JOptionPane.showMessageDialog(this, "⚠️ Formato de fecha inválido. Usa YYYY-MM-DD");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
         });
 
+        // Añadir componentes al panel
         add(lblNombreMascota);
         add(txtNombreMascota);
         add(lblFecha);
@@ -67,7 +76,7 @@ public class PanelRegistrarConsulta extends JInternalFrame {
         add(txtVeterinario);
         add(lblEspecialidad);
         add(txtEspecialidad);
-        add(new JLabel());
+        add(new JLabel()); // celda vacía
         add(btnRegistrar);
     }
 }

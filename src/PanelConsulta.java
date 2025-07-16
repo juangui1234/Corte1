@@ -147,19 +147,23 @@ public class PanelConsulta extends JInternalFrame {
         }
 
         try {
-            LocalDate.parse(fechaStr); // valida formato
+            LocalDate fecha = LocalDate.parse(fechaStr); // ✅ CORREGIDO
+
             Consulta nueva = new Consulta(
                     IDGenerator.generarCodigoConsulta(),
-                    fechaStr,
+                    fecha,
                     new Veterinario(nombreVet, especialidad)
             );
+
             mascotaActual.agregarConsulta(nueva);
             JOptionPane.showMessageDialog(this, "Consulta registrada correctamente.");
             mostrarHistorial(); // refresca
+
             // limpia campos
             txtFecha.setText("");
             txtVetNombre.setText("");
             txtVetEspecialidad.setText("");
+
         } catch (DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, "La fecha debe tener formato YYYY-MM-DD.");
         } catch (Exception ex) {

@@ -1,11 +1,13 @@
-//import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Mascota {
     private String nombre;
-    private String especie;
+     private String especie;
     private int edad;
-    // private ArrayList<Consulta> consultas; // original
-    private Historial historial; // ✅ Refactor: delegar manejo de consultas a Historial
+    //private ArrayList<Consulta> consultas;
+    private List<Vacuna> vacunas;
+    private Historial historial; //delegar manejo de consultas a historial
 
     public Mascota(String nombre, String especie, int edad) {
         /* Código original:
@@ -14,22 +16,40 @@ public class Mascota {
         this.edad = edad;
         this.consultas = new ArrayList<>();
         */
-        // ✅ Refactor: usar setters con validación y crear historial
+        //usar setters con validación y crear historial
         setNombre(nombre);
         setEspecie(especie);
         setEdad(edad);
         this.historial = new Historial();
+        this.vacunas = new ArrayList<>(); //lista vacunas
     }
 
     public void agregarConsulta(Consulta consulta) {
-        // consultas.add(consulta); // original
-        // ✅ Refactor: delegar a Historial
+        // consultas.add(consulta); //original
+        //delegar a historial
         historial.agregarConsulta(consulta);
     }
-
+    public void agregarVacuna(Vacuna vacuna) {
+        vacunas.add(vacuna);
+    }
+    public void mostrarVacunas() {
+        if (vacunas.isEmpty()) {
+            System.out.println("No hay vacunas registradas.");
+        } else {
+            System.out.println("Vacunas aplicadas a " + nombre + ":");
+            for (Vacuna v : vacunas) {
+                v.mostrarVacuna();
+                System.out.println("--------------------------");
+            }
+        }
+    }
     public void mostrarHistorial() {
         System.out.println("📋 Mascota: " + nombre + " | Especie: " + especie + " | Edad: " + edad + " años");
         System.out.println("Historial de consultas:");
+        //metodo de historial
+        historial.mostrarConsultas();
+    }
+
         /* Código original:
         if (consultas.isEmpty()) {
             System.out.println("Sin consultas registradas.");
@@ -40,11 +60,7 @@ public class Mascota {
             }
         }
         */
-        // ✅ Refactor: usar metodo de Historial
-        historial.mostrarConsultas();
-    }
-
-    // Getters y setters con validación
+    //Getters y setters con validación
     public String getNombre() {
         return nombre;
     }
@@ -76,5 +92,10 @@ public class Mascota {
             throw new IllegalArgumentException("Edad no puede ser negativa.");
         }
         this.edad = edad;
+            }
+
+    public List<Vacuna> getVacunas() {
+        return vacunas;
     }
-   }
+
+}

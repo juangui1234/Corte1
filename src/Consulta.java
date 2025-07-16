@@ -1,63 +1,84 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Consulta {
     private String codigo;
-    // private String fecha; // original
-    private LocalDate fecha; // ✅ Refactor: usar LocalDate
+    private LocalDate fecha;
     private Veterinario veterinario;
 
-    public Consulta(String codigo, String fechaTexto, Veterinario veterinario) {
-        /* Código original:
+    private String diagnostico;
+    private String tratamiento;
+    private List<String> medicamentos;
+
+    //Constructor
+    public Consulta(String codigo, LocalDate fecha, Veterinario veterinario, String diagnostico, String tratamiento, List<String> medicamentos) {
         this.codigo = codigo;
-        this.fecha = fechaTexto;
+        this.fecha = fecha;
         this.veterinario = veterinario;
-        */
-        // ✅ Refactor: uso de setters con validación y conversión de fecha
-        setCodigo(codigo);
-        setFecha(fechaTexto);
-        setVeterinario(veterinario);
+        this.diagnostico = diagnostico;
+        this.tratamiento = tratamiento;
+        this.medicamentos = medicamentos;
     }
 
-    public void mostrarConsulta() {
-        System.out.println("Consulta Código: " + codigo);
-        System.out.println("Fecha: " + fecha);
-        if (veterinario != null) {
-            veterinario.mostrarPerfil();
-        } else {
-            System.out.println("Sin veterinario asignado.");
-        }
+    // Constructor Antiguo
+    public Consulta(String codigo, LocalDate fecha, Veterinario veterinario) {
+        this.codigo = codigo;
+        this.fecha = fecha;
+        this.veterinario = veterinario;
+        this.diagnostico = "";
+        this.tratamiento = "";
+        this.medicamentos = new ArrayList<>();
     }
+
+    //metodo get y set
 
     public String getCodigo() {
         return codigo;
     }
-    public void setCodigo(String codigo) {
-        if (codigo == null || codigo.isBlank()) {
-            throw new IllegalArgumentException("Código inválido.");
-        }
-        this.codigo = codigo;
-    }
 
-   public LocalDate getFecha() {
+    public LocalDate getFecha() {
         return fecha;
-    }
-    public void setFecha(String fechaTexto) {
-        try {
-            this.fecha = LocalDate.parse(fechaTexto);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Formato de fecha inválido (YYYY-MM-DD).", e);
-        }
     }
 
     public Veterinario getVeterinario() {
         return veterinario;
     }
 
-    public void setVeterinario(Veterinario veterinario) {
-        if (veterinario == null) {
-            throw new IllegalArgumentException("Veterinario requerido.");
-        }
-        this.veterinario = veterinario;
+    public String getDiagnostico() {
+        return diagnostico;
+    }
+
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
+    }
+
+    public String getTratamiento() {
+        return tratamiento;
+    }
+
+    public void setTratamiento(String tratamiento) {
+        this.tratamiento = tratamiento;
+    }
+
+    public List<String> getMedicamentos() {
+        return medicamentos;
+    }
+
+    public void setMedicamentos(List<String> medicamentos) {
+        this.medicamentos = medicamentos;
+    }
+
+    public void agregarMedicamento(String medicamento) {
+        this.medicamentos.add(medicamento);
+    }
+
+    public void mostrarConsulta() {
+        System.out.println("Código: " + codigo);
+        System.out.println("Fecha: " + fecha);
+        System.out.println("Veterinario: " + veterinario.getNombre());
+        System.out.println("Diagnóstico: " + diagnostico);
+        System.out.println("Tratamiento: " + tratamiento);
+        System.out.println("Medicamentos recetados: " + medicamentos);
     }
 }

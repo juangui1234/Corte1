@@ -24,7 +24,7 @@ public class Propietario {
         mascotas.add(mascota);
     }
 
-    /**
+    /*
      * Muestra los datos del propietario.
      */
     public void mostrarInformacion() {
@@ -33,7 +33,7 @@ public class Propietario {
         System.out.println("📞 Teléfono: " + telefono);
     }
 
-    /**
+    /*
      * Muestra el historial de todas las mascotas asociadas.
      */
     public void mostrarMascotas() {
@@ -43,8 +43,8 @@ public class Propietario {
         }
     }
 
-    /**
-     * Conveniencia: muestra toda la ficha clínica completa.
+    /*
+     muestra toda la ficha clínica completa.
      */
     /*public void mostrarInformacionCompleta() {
         System.out.println("===== FICHA CLÍNICA =====");
@@ -73,7 +73,9 @@ public class Propietario {
         }
         this.documento = documento;
     }
-
+    public String getNombre() {
+        return nombre;
+    }
     /*public String getTelefono() {
         return telefono;
     }*/
