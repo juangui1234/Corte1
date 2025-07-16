@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 public class PanelRegistrarConsulta extends JInternalFrame {
 
@@ -11,16 +10,16 @@ public class PanelRegistrarConsulta extends JInternalFrame {
         super("Registrar Consulta", true, true, true, true);
         this.crudMascotas = crudMascotas;
 
-        setSize(450, 350);
-        setLayout(new GridLayout(8, 2, 5, 5));
+        setSize(450, 300);
+        setLayout(new GridLayout(6, 2, 5, 5));
 
-        JLabel lblNombreMascota = new JLabel("Nombre de la mascota:");
-        JTextField txtNombreMascota = new JTextField();
+        JLabel lblMascota = new JLabel("Mascota:");
+        JComboBox<Mascota> comboMascotas = new JComboBox<>();
+        for (Mascota m : crudMascotas.getMascotas()) {
+            comboMascotas.addItem(m);  // usa el toString de Mascota
+        }
 
-        JLabel lblFecha = new JLabel("Fecha (YYYY-MM-DD):");
-        JTextField txtFecha = new JTextField();
-
-        JLabel lblVeterinario = new JLabel("Nombre del veterinario:");
+        JLabel lblVeterinario = new JLabel("Veterinario:");
         JTextField txtVeterinario = new JTextField();
 
         JLabel lblEspecialidad = new JLabel("Especialidad:");
@@ -29,54 +28,38 @@ public class PanelRegistrarConsulta extends JInternalFrame {
         JButton btnRegistrar = new JButton("Registrar Consulta");
 
         btnRegistrar.addActionListener(_ -> {
-            String nombreMascota = txtNombreMascota.getText().trim();
-            String fechaTexto = txtFecha.getText().trim();
+            Mascota mascota = (Mascota) comboMascotas.getSelectedItem();
             String nombreVet = txtVeterinario.getText().trim();
             String especialidad = txtEspecialidad.getText().trim();
 
-            if (nombreMascota.isEmpty() || fechaTexto.isEmpty() || nombreVet.isEmpty() || especialidad.isEmpty()) {
+            if (mascota == null || nombreVet.isEmpty() || especialidad.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
                 return;
             }
 
-            Mascota mascota = crudMascotas.buscarPorNombre(nombreMascota);
-            if (mascota == null) {
-                JOptionPane.showMessageDialog(this, "❌ Mascota no encontrada.");
-                return;
-            }
-
             try {
-                // ✅ Conversión segura de fecha
-                LocalDate fecha = LocalDate.parse(fechaTexto);
-
-                // ✅ Crear nueva consulta
                 String codigo = IDGenerator.generarCodigoConsulta();
+                LocalDate fecha = LocalDate.now(); // fecha automática
                 Veterinario veterinario = new Veterinario(nombreVet, especialidad);
                 Consulta consulta = new Consulta(codigo, fecha, veterinario);
 
-                // ✅ Agregar consulta al historial de la mascota
                 mascota.agregarConsulta(consulta);
 
                 JOptionPane.showMessageDialog(this, "✅ Consulta registrada con éxito.");
-                dispose(); // cerrar la ventana
-
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(this, "⚠️ Formato de fecha inválido. Usa YYYY-MM-DD");
+                dispose();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
         });
 
-        // Añadir componentes al panel
-        add(lblNombreMascota);
-        add(txtNombreMascota);
-        add(lblFecha);
-        add(txtFecha);
+        // Agregar componentes
+        add(lblMascota);
+        add(comboMascotas);
         add(lblVeterinario);
         add(txtVeterinario);
         add(lblEspecialidad);
         add(txtEspecialidad);
-        add(new JLabel()); // celda vacía
+        add(new JLabel()); // espacio vacío
         add(btnRegistrar);
     }
 }

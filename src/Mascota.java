@@ -97,5 +97,8 @@ public class Mascota {
     public List<Vacuna> getVacunas() {
         return vacunas;
     }
-
+    @Override
+    public String toString() {
+        return nombre + " (" + especie + ")";
+    }
 }

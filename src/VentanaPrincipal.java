@@ -5,7 +5,7 @@ public class VentanaPrincipal extends JFrame {
 
     private JDesktopPane desktopPane;
     private CrudMascotas crudMascotas;
-
+    private CrudPropietarios crudPropietarios;
 
     public VentanaPrincipal() {
         setTitle("Sistema de Gestión Clínica Veterinaria");
@@ -14,12 +14,21 @@ public class VentanaPrincipal extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
+
+        crudPropietarios = new CrudPropietarios(); //crud propietario
         crudMascotas = new CrudMascotas(); // Instancia central del CRUD
         desktopPane = new JDesktopPane();
         add(desktopPane, BorderLayout.CENTER);
 
         crearMenu();
+        JOptionPane.showMessageDialog(
+                this,
+                "👋 Bienvenido al Sistema de Gestión Clínica Veterinaria de Mascotas realizado por Juan Guillermo Salazar",
+                "Bienvenido",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }
+
 
     private void crearMenu() {
         JMenuBar menuBar = new JMenuBar();
@@ -27,7 +36,7 @@ public class VentanaPrincipal extends JFrame {
         // Menú Archivo
         JMenu menuArchivo = getJMenu();
 
-        // Menú Vista
+        //menu vista
         JMenu menuVista = new JMenu("Vista");
 
         // Registra la consulta
@@ -41,10 +50,19 @@ public class VentanaPrincipal extends JFrame {
 
         JMenuItem itemPacientes = new JMenuItem("Pacientes");
         itemPacientes.addActionListener(_ -> {
-            ListaPacientes lista = new ListaPacientes(crudMascotas);
+            ListaPacientes lista = new ListaPacientes(crudMascotas, crudPropietarios);
             desktopPane.add(lista);
             lista.setVisible(true);
         });
+
+        JMenuItem itemHistorial = new JMenuItem("Historial de consultas");
+        itemHistorial.addActionListener(_ -> {
+            PanelHistorialConsultas panel = new PanelHistorialConsultas(crudMascotas);
+            desktopPane.add(panel);
+            panel.setVisible(true);
+        });
+
+        menuVista.add(itemHistorial);menuVista.add(itemHistorial);
 
         JMenuItem itemConsulta = new JMenuItem("Consulta");
         itemConsulta.addActionListener(_ -> {
@@ -75,15 +93,37 @@ public class VentanaPrincipal extends JFrame {
     private JMenu getJMenu() {
         JMenu menuArchivo = new JMenu("Archivo");
 
-        JMenuItem itemNuevo = new JMenuItem("Nuevo registro");
+        //menu propietarios
+        JMenuItem itemPropietarios = new JMenuItem("Registrar Propietario");
+        itemPropietarios.addActionListener(_ -> {
+            PanelGestionPropietarios panel = new PanelGestionPropietarios(crudPropietarios);
+            desktopPane.add(panel);
+            panel.setVisible(true);
+        });
+        menuArchivo.add(itemPropietarios);
+
+        JMenuItem itemNuevo = new JMenuItem("Nuevo registro mascota");
         itemNuevo.addActionListener(_ -> {
-            FormularioPaciente form = new FormularioPaciente(crudMascotas);
+            FormularioPaciente form = new FormularioPaciente(crudMascotas, crudPropietarios);
             desktopPane.add(form);
             form.setVisible(true);
         });
 
+
         JMenuItem itemSalir = new JMenuItem("Salir");
-        itemSalir.addActionListener(_ -> System.exit(0));
+        itemSalir.addActionListener(_ -> {
+            int opcion = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Está seguro que desea salir?",
+                    "Confirmar salida",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        });
 
         menuArchivo.add(itemNuevo);
         menuArchivo.addSeparator();
