@@ -25,12 +25,16 @@ public class PanelRegistrarConsulta extends JInternalFrame {
         JLabel lblEspecialidad = new JLabel("Especialidad:");
         JTextField txtEspecialidad = new JTextField();
 
+        JLabel lblDisponible = new JLabel("¿Disponible?");
+        JCheckBox chkDisponible = new JCheckBox();
+
         JButton btnRegistrar = new JButton("Registrar Consulta");
 
         btnRegistrar.addActionListener(_ -> {
             Mascota mascota = (Mascota) comboMascotas.getSelectedItem();
             String nombreVet = txtVeterinario.getText().trim();
             String especialidad = txtEspecialidad.getText().trim();
+            boolean disponible = chkDisponible.isSelected(); // ✅ leer checkbox
 
             if (mascota == null || nombreVet.isEmpty() || especialidad.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
@@ -40,9 +44,9 @@ public class PanelRegistrarConsulta extends JInternalFrame {
             try {
                 String codigo = IDGenerator.generarCodigoConsulta();
                 LocalDate fecha = LocalDate.now(); // fecha automática
-                Veterinario veterinario = new Veterinario(nombreVet, especialidad);
-                Consulta consulta = new Consulta(codigo, fecha, veterinario);
+                Veterinario veterinario = new Veterinario(nombreVet, especialidad, disponible); // ✅ ahora sí
 
+                Consulta consulta = new Consulta(codigo, fecha, veterinario);
                 mascota.agregarConsulta(consulta);
 
                 JOptionPane.showMessageDialog(this, "✅ Consulta registrada con éxito.");
@@ -59,6 +63,8 @@ public class PanelRegistrarConsulta extends JInternalFrame {
         add(txtVeterinario);
         add(lblEspecialidad);
         add(txtEspecialidad);
+        add(lblDisponible);
+        add(chkDisponible);
         add(new JLabel()); // espacio vacío
         add(btnRegistrar);
     }

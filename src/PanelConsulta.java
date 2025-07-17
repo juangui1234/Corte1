@@ -152,7 +152,7 @@ public class PanelConsulta extends JInternalFrame {
             Consulta nueva = new Consulta(
                     IDGenerator.generarCodigoConsulta(),
                     fecha,
-                    new Veterinario(nombreVet, especialidad)
+                    new Veterinario(nombreVet, especialidad, true)
             );
 
             mascotaActual.agregarConsulta(nueva);

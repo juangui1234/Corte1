@@ -2,8 +2,10 @@ public class Veterinario {
     private String nombre;
     private String especialidad;
     private String nombreVeterinario;
+    private boolean disponible;
 
-    public Veterinario(String nombre, String especialidad) {
+    public Veterinario(String nombre, String especialidad, boolean disponible) {
+        this.disponible = disponible;
         /* Código original:
         this.nombre = nombre;
         this.especialidad = especialidad;
@@ -11,6 +13,7 @@ public class Veterinario {
         // ✅ Refactor: validación de argumentos
         setNombre(nombre);
         setEspecialidad(especialidad);
+
     }
 
     public void mostrarPerfil() {
@@ -37,4 +40,12 @@ public class Veterinario {
         }
         this.especialidad = especialidad;
     }
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
 }
