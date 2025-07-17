@@ -39,17 +39,6 @@ public class VentanaPrincipal extends JFrame {
         //menu vista
         JMenu menuVista = new JMenu("Vista");
 
-        // Registra la consulta
-        JMenuItem itemRegistrarConsulta = new JMenuItem("Registrar consulta");
-        itemRegistrarConsulta.addActionListener(_ -> {
-            PanelRegistrarConsulta panel = new PanelRegistrarConsulta(crudMascotas);
-            desktopPane.add(panel);
-            panel.setVisible(true);
-        });
-        menuVista.add(itemRegistrarConsulta);
-
-
-
         JMenuItem itemPacientes = new JMenuItem("Pacientes");
         itemPacientes.addActionListener(_ -> {
             ListaPacientes lista = new ListaPacientes(crudMascotas, crudPropietarios);
@@ -112,13 +101,22 @@ public class VentanaPrincipal extends JFrame {
         });
         menuArchivo.add(itemPropietarios);
 
-        JMenuItem itemNuevo = new JMenuItem("Nuevo registro mascota");
+        JMenuItem itemNuevo = new JMenuItem("Registrar Mascota");
         itemNuevo.addActionListener(_ -> {
             FormularioPaciente form = new FormularioPaciente(crudMascotas, crudPropietarios);
             desktopPane.add(form);
             form.setVisible(true);
         });
 
+
+        // Registra la consulta
+        JMenuItem itemRegistrarConsulta = new JMenuItem("Registrar Consulta");
+        itemRegistrarConsulta.addActionListener(_ -> {
+            PanelRegistrarConsulta panel = new PanelRegistrarConsulta(crudMascotas);
+            desktopPane.add(panel);
+            panel.setVisible(true);
+        });
+        menuArchivo.add(itemRegistrarConsulta);
 
         JMenuItem itemSalir = new JMenuItem("Salir");
         itemSalir.addActionListener(_ -> {
